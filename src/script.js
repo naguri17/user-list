@@ -5,9 +5,24 @@ let CURRENT_PAGE = 1;
 let DEFAULT_PAGE_SIZE = 4;
 let STORAGE = [];
 
+const MODAL_ELEMENT_ADD = document.querySelector(".modal-add");
+const SHOW_MODAL_ADD = document.querySelector(".show-modal-add");
+const CLOSE_MODAL_ADD = document.querySelectorAll(".close-modal-add");
+const SUBMIT_TRIGGER = document.querySelector(".submit-trigger");
+const NAME_INPUT = document.querySelector("#name-info");
+const EMAIL_INPUT = document.querySelector("#email-info");
+const PHONE_INPUT = document.querySelector("#phone-info");
+const STREET_INPUT = document.querySelector("#street-info");
+const SUITE_INPUT = document.querySelector("#suite-info");
+const CITY_INPUT = document.querySelector("#city-info");
+const DELETE_ELEMENT = document.querySelectorAll(".delete-btn");
+const ID_INFO = document.querySelector(".id-info");
+const SORT_ELEMENT = document.querySelector(".sort-btn");
+const EDIT_ELEMENT = document.querySelectorAll(".edit-btn");
+
 window.addEventListener("load", async () => {
   await getData().then((res) => {
-    console.log(res);
+    // console.log(res);
     STORAGE = res;
     paginationButtonGenerator(DEFAULT_PAGE_SIZE, STORAGE);
     const paginationData = handlePagination(DEFAULT_PAGE_SIZE, STORAGE);
@@ -29,7 +44,7 @@ const displayHandler = (element, data) => {
     (dom, { id, name, address: { street, suite, city }, email, phone }) =>
       `${dom}
     <tr>
-      <td class="border px-8 py-2">${id}</td>
+      <td class="border px-8 py-2 id-info">${id}</td>
       <td class="border px-8 w-[300px] py-2">${name}</td>
       <td class="border px-8 w-[400px] py-2">${street}${", "} ${suite}${", "} ${city} </td>
       <td class="border px-8 w-[300px] py-2">${email}</td>
@@ -43,7 +58,8 @@ const displayHandler = (element, data) => {
           Edit
         </button>
         <button
-          class="px-4 py-2 bg-red-500 hover:bg-red-600 w-[100px] rounded-lg"
+          class="px-4 py-2 bg-red-500 hover:bg-red-600 w-[100px] rounded-lg delete-btn"
+          
         >
           Delete
         </button>
@@ -127,7 +143,7 @@ SEARCH_ELEMENT.addEventListener("keyup", async (event) => {
     );
   });
 
-  console.log({ STORAGE, searchString });
+  // console.log({ STORAGE, searchString });
 
   PAGINATION_ELEMENT.innerHTML = "";
 
@@ -135,3 +151,69 @@ SEARCH_ELEMENT.addEventListener("keyup", async (event) => {
   const paginationData = handlePagination(DEFAULT_PAGE_SIZE, STORAGE);
   displayHandler(TABLE_CONTENT_ELEMENT, paginationData);
 });
+
+// Add
+
+SHOW_MODAL_ADD.addEventListener("click", () => {
+  MODAL_ELEMENT_ADD.classList.remove("hidden");
+});
+
+CLOSE_MODAL_ADD.forEach((close) => {
+  close.addEventListener("click", () => {
+    MODAL_ELEMENT_ADD.classList.add("hidden");
+  });
+});
+
+let newStorage = [];
+
+SUBMIT_TRIGGER.addEventListener("click", () => {
+  let info = new Object();
+  let addressInfo = new Object();
+
+  info.id = STORAGE.length + 1;
+  info.name = NAME_INPUT.value;
+  info.email = EMAIL_INPUT.value;
+  info.phone = PHONE_INPUT.value;
+  addressInfo.street = STREET_INPUT.value;
+  addressInfo.suite = SUITE_INPUT.value;
+  addressInfo.city = CITY_INPUT.value;
+  info.address = addressInfo;
+
+  STORAGE.push(info);
+
+  PAGINATION_ELEMENT.innerHTML = "";
+
+  paginationButtonGenerator(DEFAULT_PAGE_SIZE, STORAGE);
+  const paginationData = handlePagination(DEFAULT_PAGE_SIZE, STORAGE);
+  displayHandler(TABLE_CONTENT_ELEMENT, paginationData);
+  // console.log(STORAGE);
+  // console.log(info);
+});
+
+// Sort
+SORT_ELEMENT.addEventListener("click", () => {
+  STORAGE.sort((a, b) => (a.name > b.name ? 1 : b.name > a.name ? -1 : 0));
+
+  PAGINATION_ELEMENT.innerHTML = "";
+
+  paginationButtonGenerator(DEFAULT_PAGE_SIZE, STORAGE);
+  const paginationData = handlePagination(DEFAULT_PAGE_SIZE, STORAGE);
+  displayHandler(TABLE_CONTENT_ELEMENT, paginationData);
+});
+
+// Delete
+DELETE_ELEMENT.forEach((item, index) => {
+  item.addEventListener("click", () => {
+    console.log(index);
+  });
+});
+
+// const test = document.querySelectorAll(".test-btn");
+// test.forEach((item, index) => {
+//   console.log("item", item);
+//   item.addEventListener("click", () => {
+//     console.log("index", index);
+//   });
+// });
+
+// Edit

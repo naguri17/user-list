@@ -23,12 +23,12 @@
             />
             <div class="flex flex-row gap-2">
               <button
-                class="bg-emerald-500 hover:bg-emerald-600 px-2 rounded-lg text-white font-semibold w-[100px]"
+                class="bg-emerald-500 hover:bg-emerald-600 px-2 rounded-lg text-white font-semibold w-[100px] sort-btn"
               >
-                Sort ID
+                Sort Name
               </button>
               <button
-                class="bg-purple-500 hover:bg-purple-600 px-2 rounded-lg text-white font-semibold w-[100px]"
+                class="bg-purple-500 hover:bg-purple-600 px-2 rounded-lg text-white font-semibold w-[100px] show-modal-add"
               >
                 Add User
               </button>
@@ -49,6 +49,77 @@
         id="pagination"
       ></div>
     </div>
+
+    <div
+      class="modal-add hidden h-screen w-full fixed flex left-0 top-0 justify-center items-center bg-black bg-opacity-50"
+    >
+      <!-- modal -->
+      <div class="bg-white rounded shadow-lg w-1/3">
+        <!-- modal header -->
+        <div class="border-b px-5 py-5 flex justify-between items-center">
+          <h2 class="text-3xl font-bold">Add User Form</h2>
+          <button
+            class="text-black close-modal-add leading-10 border px-4 rounded-lg"
+          >
+            X
+          </button>
+        </div>
+        <!-- modal body -->
+        <div class="py-10 px-5">
+          <div class="flex flex-col gap-4">
+            <input
+              type="text"
+              class="border px-2 py-2 rounded-lg"
+              id="name-info"
+              placeholder="Name"
+            />
+            <h3 class="ml-1">Address:</h3>
+            <div class="flex flex-row gap-2">
+              <input
+                type="text"
+                placeholder="Street"
+                id="street-info"
+                class="border w-[32%] px-2 py-2 rounded-lg"
+              />
+              <input
+                type="text"
+                placeholder="Suite"
+                id="suite-info"
+                class="border w-[32%] px-2 py-2 rounded-lg"
+              />
+              <input
+                type="text"
+                placeholder="City"
+                id="city-info"
+                class="border w-[33%] px-2 py-2 rounded-lg"
+              />
+            </div>
+
+            <input
+              type="text"
+              class="border px-2 py-2 rounded-lg"
+              placeholder="Email"
+              id="email-info"
+            />
+
+            <input
+              type="text"
+              id="phone-info"
+              class="border px-2 py-2 rounded-lg"
+              placeholder="Phone"
+            />
+          </div>
+        </div>
+        <div class="flex justify-end items-center w-100 border-t p-3">
+          <button
+            class="bg-emerald-600 hover:bg-emerald-700 px-3 py-1 rounded text-white mr-1 close-modal-add submit-trigger"
+          >
+            Submit
+          </button>
+        </div>
+      </div>
+    </div>
+
     <script src="script.js"></script>
   </body>
 </html>
